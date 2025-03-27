@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 	"os"
 	"path/filepath"
 
@@ -21,6 +22,28 @@ func main() {
 	var rootCmd = &cobra.Command{
 		Use:   "imgtool",
 		Short: "Утилита для обработки изображений",
+	}
+
+	// Команда для обрезки (crop)
+	var cropCmd = &cobra.Command{
+		Use:   "crop",
+		Short: "Обрезать изображение",
+		Run: func(cmd *cobra.Command, args []string) {
+			img, err := imaging.Open(inputPath)
+			if err != nil {
+				fmt.Println("Ошибка открытия файла:", err)
+				return
+			}
+
+			// Обрезаем до указанных размеров
+			croppedImg := imaging.Crop(img, image.Rect(0, 0, width, height))
+			err = imaging.Save(croppedImg, outputPath)
+			if err != nil {
+				fmt.Println("Ошибка сохранения:", err)
+				return
+			}
+			fmt.Println("Изображение обрезано и сохранено в", outputPath)
+		},
 	}
 
 	// Команда для поворота (rotate)
