@@ -19,6 +19,8 @@ func Execute() error {
 	rootCmd.AddCommand(convertCmd)
 	rootCmd.AddCommand(resizeCmd)
 	rootCmd.AddCommand(rotateCmd)
+	rootCmd.AddCommand(cropCmd)
+	rootCmd.AddCommand(oldphotoCmd)
 
 	return rootCmd.Execute()
 }
